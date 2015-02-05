@@ -141,7 +141,9 @@ var lightShowSequence = seq.create([turnBlue, turnRed, turnGreen]);
 seq(lightShowSequence).run( null, null, { context: LEDs.set1 });
 
 // wait a second, and run the same sequence on another set
-seq(lightShowSequence).run( null, null, { context: LEDs.set2 });
+setTimeout( function () {
+  seq(lightShowSequence).run( null, null, { context: LEDs.set2 });
+}, 1000);
 ```
 
 ###Composition
@@ -156,6 +158,7 @@ var sequence2 = seq.create([turnOrange, turnMagenta, sequence1, turnTeal]);
 // feel free to compose sequences as steps in any way you like
 var sequence3 = seq.create([sequence1, sequence1, sequence2, sequence1, turnRed]);
 ```
+When sequences are composed in this manner, steps are flattened into the top-most sequence: So, in the example above, ```sequence1``` has 3 steps, ```sequence2``` has 6 steps, and ```sequence3``` has 16 steps
 
 ###Abort a running sequencer
 You can abort a running sequencer at any time by calling ```Sequencer.abort(callback)```.  If a callback is provided, any arguments for the last run step will be passed to that callback.
