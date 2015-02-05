@@ -27,7 +27,7 @@ var success = function () {
 };
 
 var fail = function () {
-  console.error('Sequence did not complete.);
+  console.error('Sequence did not complete.');
 };
 
 // run once with callbacks
