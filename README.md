@@ -4,6 +4,13 @@ Sequence provides a simple syntax for chaining asynchronous function calls
 ##Try it
 You can try out Sequence here: _coming soon_
 
+##Overview
+###Sequence
+A Sequence is a collection of functions to be run asynchronously in a specific order.  Sequences can be reused, and composed into other sequences.
+
+###Sequencer
+A Sequencer runs a Sequence one or more times, handling sequence start, completion, failure, and abort, and may do so in any context.  Multiple Sequencer's may use a single Sequence simultaniously.
+
 ##Usage
 ###Create and run a sequence
 Here is how to create and run a sequence.
@@ -17,6 +24,7 @@ seq([func1, func2, func3]).run();
 seq([func4, func5, func6]).repeat(3);
 
 ```
+It's important to note that ```seq()``` is a shortcut which creates a Sequence, wraps it in a Sequencer, and returns that Sequencer to be run or repeated.  For more details, see *Reusing Sequences*.
 
 ###Callbacks
 Pass in callbacks for when a sequence completes, or for when a sequence ends without completing.
@@ -37,8 +45,8 @@ seq([step1, step2, step3]).run( success, fail );
 seq([step1, step2, step3]).repeat( 3, success, fail );
 ```
 
-###Functions for a sequence a.k.a. "Steps"
-All functions or "steps" in a sequence will be called with the first argument, a "done" function, which is to be called when an asynchronous call is finished.  The "done" function may be called with any number of arguments you wish to pass to the next step.  If a step fails, call the "done" function with *false* as the first argument, and any error details as subsequent arguments.  The arguments received by the first step in a sequence will be a "done" function, and any parameters added in the sequence settings (See: Settings).
+###Functions for a Sequence, a.k.a. "Steps"
+All functions or "steps" in a sequence will be called with the first argument, a "done" function, which is to be called when an asynchronous call is finished.  The "done" function may be called with any number of arguments you wish to pass to the next step.  If a step fails, call the "done" function with ```false``` as the first argument, and any error details as subsequent arguments.  The arguments received by the first step in a sequence will be a "done" function, and any parameters added in the sequencer settings at runtime (See: *Settings*).
 
 ```js
 
@@ -97,11 +105,11 @@ var fail = function (error, detail) {
 
 // Create and run the sequence
 
-seq([step1, step2, step3]).run( success, fail );
+seq([step1, step2]).run( success, fail );
 ```
 
 ###Settings
-Settings are passed as a parameter when calling ```.run``` or ```.repeat```.  There are a couple of settings you can use when running a sequence: The "params" setting is an array of arguments to be passed along with the "done" function to the first step of a sequence, and the "context" setting allows you to force the context in which each step is called.  Forcing the context of steps allows you to run a single sequence against multiple targets, accessed within each step with ```this``` (See: Reusing sequences).
+Settings are passed as a parameter when calling ```.run()``` or ```.repeat()``` on a Sequencer.  There are a couple of settings you can use when running a sequencer: The "params" setting is an array of arguments to be passed along with the "done" function to the first step of a sequence, and the "context" setting allows you to force the context in which each step is called.  Forcing the context of steps allows you to run a single sequence against multiple targets, accessed within each step with ```this``` (See: *Reusing Sequences*).
 ```js
 var settings = {
   params: [
