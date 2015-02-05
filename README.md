@@ -89,7 +89,7 @@ var success = function (messages, firstMessage) {
 // Handle sequence if it ended without completing to last step
 
 var fail = function (error, detail) {
-  if (error === "No new message")
+  if (error === "No new messages")
     console.warn('No new messages to display');
   else
     console.error('ERROR RETRIEVING NEW MESSAGES!', error, detail);
@@ -98,3 +98,53 @@ var fail = function (error, detail) {
 // Create and run the sequence
 
 seq([step1, step2, step3]).run( success, fail );
+```
+
+###Settings
+Settings are passed as a parameter when calling ```.run``` or ```.repeat```.  There are a couple of settings you can use when running a sequence: The "params" setting is an array of arguments to be passed along with the "done" function to the first step of a sequence, and the "context" setting allows you to force the context in which each step is called.  Forcing the context of steps allows you to run a single sequence against multiple targets, accessed within each step with ```this``` (See: Reusing sequences).
+```js
+var settings = {
+  params: [
+    'http://example.com/api/',
+    SOME_KEY,
+    SOME_TOKEN
+  ],
+  context: messageView
+};
+
+// run once with settings
+seq([step1, step2, step3]).run( success, fail, settings );
+
+// repeat with settings
+seq([step1, step2, step3]).repeat( 3, success, fail, settings );
+
+// run once with settings, but no callbacks
+seq([step1, step2, step3]).run( null, null, settings );
+```
+
+###Reusing Sequences
+Calling ```seq()``` in the above examples returns a *Sequencer* object, not a *Sequence* object.  To create a reusable Sequence object, call ```seq.create()```.
+```js
+// create a reusable sequence
+// this example create a sequence of steps to change the color property of some LED lights
+var lightShowSequence = seq.create([turnBlue, turnRed, turnGreen]);
+
+// run this sequence on a set of LED lights
+seq(lightShowSequence).run( null, null, { context: LEDs.set1 });
+
+// wait a second, and run the same sequence on another set
+seq(lightShowSequence).run( null, null, { context: LEDs.set2 });
+```
+
+###Composition
+Sometimes you may want to use an existing sequence as a step in another sequence.  This is a very simple thing to do.
+```js
+// create a light sequence
+var sequence1 = seq.create([turnBlue, turnRed, turnGreen]);
+
+// use sequence 1 as step 3 in another sequence
+var sequence2 = seq.create([turnOrange, turnMagenta, sequence1, turnTeal]);
+
+// feel free to compose sequences as steps in any way you like
+var sequence3 = seq.create([sequence1, sequence1, sequence2, sequence1, turnRed]);
+```
