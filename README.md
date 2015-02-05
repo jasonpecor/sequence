@@ -148,3 +148,18 @@ var sequence2 = seq.create([turnOrange, turnMagenta, sequence1, turnTeal]);
 // feel free to compose sequences as steps in any way you like
 var sequence3 = seq.create([sequence1, sequence1, sequence2, sequence1, turnRed]);
 ```
+
+###Abort a running sequencer
+You can abort a running sequencer at any time by calling ```Sequencer.abort(callback)```.  If a callback is provided, any arguments for the last run step will be passed to that callback.
+```js
+var sequencer = seq([turnRed, waitTenSeconds, turnBlue, waitTenSeconds]).run(); // police lights!
+
+// wait 4 seconds, then abort the sequencer
+setTimeout( function () {
+
+  sequencer.abort( function () {
+    console.warn('Sequence Aborted!', arguments);
+  });
+  
+}, 4000);
+```
