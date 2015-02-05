@@ -1,0 +1,32 @@
+{
+  "name": "sequence",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jasonpecor/sequence",
+  "authors": [
+    "jasonpecor <jason@jasonpecor.com>"
+  ],
+  "description": "Create linear asynchronous function chaining with a simple, clean syntax",
+  "main": "dist/sequence.js",
+  "keywords": [
+    "asynchronous",
+    "chaining",
+    "callback",
+	"Promise"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+	"src",
+	"bower.json",
+	"package.json",
+	"LICENSE",
+	"README.md",
+	"test.js",
+	"gulpfile.js",
+	"example.html"
+  ]
+}

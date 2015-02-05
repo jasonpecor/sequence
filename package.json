@@ -1,0 +1,23 @@
+{
+	"name": "sequence",
+	"version": "0.0.1",
+	"description": "Create linear asynchronous function chaining with a simple, clean syntax",
+	"license": "MIT",
+	"author": "Jason Pecor",
+	"main": "dist/sequence.js",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/jasonpecor/sequence.git"
+	},
+	"bugs": {
+		"url": "http://github.com/jasonpecor/sequence"
+	},
+	"devDependencies": {
+		"gulp": "~3.8.0",
+		"gulp-jshint": "^1.5.3",
+		"gulp-concat": "^2.2.0",
+		"gulp-uglify": "^0.2.1",
+		"gulp-rename": "^1.2.0"
+	},
+	"dependencies": {}
+}
