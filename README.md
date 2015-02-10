@@ -23,6 +23,9 @@ seq([func1, func2, func3]).run();
 // create and repeat a sequence 3 times
 seq([func4, func5, func6]).repeat(3);
 
+// create and repeat a sequence forever
+seq([func4, func5, func6]).repeat(Infinity);
+
 ```
 It's important to note that ```seq()``` is a shortcut which creates a Sequence, wraps it in a Sequencer, and returns that Sequencer to be run or repeated.  For more details, see *Reusing Sequences*.
 
