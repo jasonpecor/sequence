@@ -54,7 +54,7 @@
 		if (this._abort)
 			throw 'Sequence abort already requested';
 		
-		this._abort = done;
+		this._abort = done || true;
 		return this;
 	};
 	
@@ -71,7 +71,9 @@
 				
 				// sequencer operation aborted
 				
-				self._abort.apply(context, arguments);
+				if (typeof self._abort === 'function')
+					self._abort.apply(context, arguments);
+				
 				self._abort = undefined;
 				return;
 			}
